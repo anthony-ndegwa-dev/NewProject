@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<project name="Rectangle-Build" default="main" basedir=".">
+	<property environment="env"/>
+
+	<project name="src.dir" location="src" />
+ 	<project name="build.dir" location="bin" />
+	<project name="dist.dir" location="dist" />
+
+	<path id="class.path">
+		<pathelement location="./bin" />
+	</path>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${docs.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="makedir">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${docs.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="compile" depends="clean, makedir">
+		<javac srcdir="${src.dir}" destdir="${build.dir}">
+			<classpath refid="class.path" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="complile">
+		<jar destfile="${dist.dir}\rectangle.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="Rectangulator" />
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="main" depends="compile, jar">
+		<description>Main target</description>
+	</target>
+</project>
+
